@@ -1,19 +1,31 @@
- <a class="item">
-    ChatRoom
-  </a>
+
+ <%= link_to "ChatRoom" ,root_path , :class => 'item'%>
   <a class="item">
     Messages
   </a>
   <div class="right menu">
     <div class="ui dropdown item">
+    <% if user_signed_in?%>
+   <a>Logged in as:</a> <strong class= "dropdown icon" ><%= current_user.email %></strong>
+    <%else%>
       Account <i class="dropdown icon"></i>
+      <%end%>
       <div class="menu">
-        <a class="item">Log in</a>
-        <a class="item">Log out</a>
-        <a class="item">Sign up</a>
+        
+        <% if user_signed_in?%>
+        <%= link_to "Edit your account" ,edit_user_registration_path , :class => 'item'%>
+        <%else%>
+        <%= link_to "Log in", new_user_session_path, :class => 'item'  %> 
+        <%= link_to "Sign up", new_user_registration_path, :class => 'item'  %> 
+        <%end%>
+        
       </div>
     </div>
     <div class="item">
-        <div class="ui primary button">Sign Up</div>
+    <% if user_signed_in?%>
+    <%= link_to "Log out", destroy_user_session_path, method: :delete, :class => 'negative ui primary button'  %>
+    <%else%>
+        <%= link_to "Sign up", new_user_registration_path, :class => 'ui primary button'  %> 
+        <%end%>
     </div>
     </div>
